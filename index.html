@@ -864,15 +864,15 @@
 
     <script>
       const introAssets = {
-        startImage: "./images//images/start-main-scene.png",
-        guideImage: "./images//images/guide-advisor-role.png",
+        startImage: "start-main-scene.png",
+        guideImage: "guide-advisor-role.png",
       };
 
       const quizData = [
         {
           stage: 1,
           title: "첫 민원 접수",
-          image: "./images//images/stage01-first-consultation.png",
+          image: "stage01-first-consultation.png",
           speech: "청양고추를 처음 키워보는데, 어디서부터 시작해야 하나요?",
           situation: "청양고추 재배 시작 / 모종 준비 / 재배 일정 확인 필요",
           question: "고추 재배를 시작할 때 가장 먼저 확인해야 할 것은 무엇일까요?",
@@ -891,7 +891,7 @@
         {
           stage: 2,
           title: "정식 전 밭 준비",
-          image: "./images//images/stage02-field-preparation.png",
+          image: "stage02-field-preparation.png",
           speech: "모종은 준비됐는데 밭에 바로 심어도 될까요?",
           situation: "정식 전 단계 / 밭 준비 중 / 토양과 배수 확인 필요",
           question: "정식 전에 가장 중요하게 확인해야 할 것은 무엇일까요?",
@@ -910,7 +910,7 @@
         {
           stage: 3,
           title: "어린 고추가 시들어요",
-          image: "./images//images/stage03-wilting-young-pepper.png",
+          image: "stage03-wilting-young-pepper.png",
           speech: "물을 줬는데도 고추가 계속 시들어요!",
           situation: "정식 후 초기 생육 / 최근 관수량 증가 / 일부 잎 처짐 발생",
           question: "이때 농촌지도사가 먼저 해야 할 행동은 무엇일까요?",
@@ -929,7 +929,7 @@
         {
           stage: 4,
           title: "잎 색이 연해졌어요",
-          image: "./images//images/stage04-pale-leaves.png",
+          image: "stage04-pale-leaves.png",
           speech: "잎 색이 연하고 힘이 없어 보여요.",
           situation: "잎 색 연화 / 생육 약화 / 비료 이력 확인 필요",
           question: "가장 알맞은 상담 방향은 무엇일까요?",
@@ -948,7 +948,7 @@
         {
           stage: 5,
           title: "꽃은 피는데 열매가 적어요",
-          image: "./images//images/stage05-flowering-low-fruit.png",
+          image: "stage05-flowering-low-fruit.png",
           speech: "꽃은 많은데 왜 고추가 잘 안 달릴까요?",
           situation: "개화 중 / 착과 불량 / 온도·수분·양분 상태 확인 필요",
           question: "착과가 잘 안 될 때 확인할 내용으로 가장 알맞은 것은 무엇일까요?",
@@ -967,7 +967,7 @@
         {
           stage: 6,
           title: "고추 끝이 검게 변해요",
-          image: "./images//images/stage06-black-pepper-tip.png",
+          image: "stage06-black-pepper-tip.png",
           speech: "고추 끝이 검게 변했어요. 병인가요?",
           situation: "열매 끝부분 흑변 / 수분 관리 불안정 가능 / 칼슘 흡수 확인 필요",
           question: "이 상황에서 우선 의심해볼 수 있는 것은 무엇일까요?",
@@ -986,7 +986,7 @@
         {
           stage: 7,
           title: "잎이 오그라들고 얼룩져요",
-          image: "./images//images/stage07-curled-mottled-leaves.png",
+          image: "stage07-curled-mottled-leaves.png",
           speech: "잎이 쭈글쭈글하고 얼룩져요!",
           situation: "잎 오그라듦 / 얼룩무늬 발생 / 바이러스와 매개충 확인 필요",
           question: "바이러스 의심 증상일 때 알맞은 설명은 무엇일까요?",
@@ -1005,7 +1005,7 @@
         {
           stage: 8,
           title: "장마 뒤 고추에 반점이 생겨요",
-          image: "./images//images/stage08-rainy-spots.png",
+          image: "stage08-rainy-spots.png",
           speech: "비가 온 뒤부터 고추에 반점이 생겼어요!",
           situation: "장마 후 습한 환경 / 열매 반점 발생 / 병든 열매 관리 필요",
           question: "이때 가장 알맞은 지도 내용은 무엇일까요?",
@@ -1024,7 +1024,7 @@
         {
           stage: 9,
           title: "너무 더워서 고추가 약해져요",
-          image: "./images//images/stage09-heat-stress.png",
+          image: "stage09-heat-stress.png",
           speech: "너무 더워서 고추가 힘이 없어 보여요!",
           situation: "고온 지속 / 강한 햇빛 / 수분·차광·통풍 관리 필요",
           question: "고온기 관리로 가장 알맞은 것은 무엇일까요?",
@@ -1043,7 +1043,7 @@
         {
           stage: 10,
           title: "수확 직전 마지막 점검",
-          image: "./images//images/stage10-harvest-check.png",
+          image: "stage10-harvest-check.png",
           speech: "이제 수확해도 될까요? 아직 덜 익은 것도 있어요.",
           situation: "수확 직전 / 착색 정도 차이 / 병든 열매 확인 필요",
           question: "수확 직전 농촌지도사가 안내할 내용으로 가장 알맞은 것은 무엇일까요?",
@@ -1074,6 +1074,8 @@
         result: document.getElementById("resultScreen"),
       };
 
+      const imageBaseCandidates = ["assets/images", "images", "./assets/images", "./images"];
+
       function showScreen(name) {
         Object.values(screens).forEach((screen) => screen.classList.remove("active"));
         screens[name].classList.add("active");
@@ -1083,7 +1085,7 @@
       function renderStartScreen() {
         renderSceneImage(
           "startImageArea",
-          intro./images/startImage,
+          introAssets.startImage,
           "청양고추 구출작전 대표 이미지",
           "게임 대표 이미지 준비 중",
           "🌶️",
@@ -1094,7 +1096,7 @@
       function renderGuideScreen() {
         renderSceneImage(
           "guideImageArea",
-          intro./images/guideImage,
+          introAssets.guideImage,
           "농촌지도사 소개 이미지",
           "농촌지도사 소개 이미지 준비 중",
           "👩‍🌾",
@@ -1121,7 +1123,7 @@
 
         document.getElementById("stageText").textContent = `${item.stage} / ${activeQuizData.length} 단계`;
         document.getElementById("scoreText").textContent = score;
-        document.getElementById("progressFill").style.width = `${item.stage * 10}%`;
+        document.getElementById("progressFill").style.width = `${(item.stage / activeQuizData.length) * 100}%`;
         document.getElementById("stageTitle").textContent = item.title;
         document.getElementById("speechText").textContent = item.speech;
         document.getElementById("situationText").textContent = item.situation;
@@ -1144,19 +1146,54 @@
         hideFeedback();
       }
 
-      function renderSceneImage(elementId, imageSrc, altText, placeholderText, iconText) {
-        const imageArea = document.getElementById(elementId);
-        if (imageSrc) {
-          imageArea.innerHTML = `<img src="${imageSrc}" alt="${altText}" />`;
-          return;
-        }
+      function createImageMarkup(src, altText) {
+        return `<img src="${src}" alt="${altText}" />`;
+      }
 
-        imageArea.innerHTML = `
+      function createImagePlaceholder(placeholderText, iconText) {
+        return `
           <div class="image-placeholder">
             <div class="placeholder-icon">${iconText}</div>
             <p>${placeholderText}</p>
           </div>
         `;
+      }
+
+      function resolveImageCandidates(imageSrc) {
+        if (!imageSrc) {
+          return [];
+        }
+
+        if (imageSrc.includes("/")) {
+          return [imageSrc];
+        }
+
+        return imageBaseCandidates.map((basePath) => `${basePath}/${imageSrc}`);
+      }
+
+      function renderSceneImage(elementId, imageSrc, altText, placeholderText, iconText) {
+        const imageArea = document.getElementById(elementId);
+        const candidates = resolveImageCandidates(imageSrc);
+
+        if (!candidates.length) {
+          imageArea.innerHTML = createImagePlaceholder(placeholderText, iconText);
+          return;
+        }
+
+        let candidateIndex = 0;
+        imageArea.innerHTML = createImageMarkup(candidates[candidateIndex], altText);
+
+        const imageEl = imageArea.querySelector("img");
+        imageEl.addEventListener("error", () => {
+          candidateIndex += 1;
+
+          if (candidateIndex < candidates.length) {
+            imageEl.src = candidates[candidateIndex];
+            return;
+          }
+
+          imageArea.innerHTML = createImagePlaceholder(placeholderText, iconText);
+        });
       }
 
       function randomizeOptions(item) {
