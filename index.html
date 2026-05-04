@@ -650,6 +650,26 @@
         line-height: 1.65;
       }
 
+      /* 하단 기관 푸터 */
+      .app-footer {
+        display: grid;
+        justify-items: center;
+        gap: 8px;
+        margin: 18px auto 0;
+        padding: 12px 8px 22px;
+        color: #667085;
+        font-size: 13px;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .app-footer img {
+        width: min(140px, 38vw);
+        max-height: 34px;
+        height: auto;
+        object-fit: contain;
+      }
+
       @media (max-width: 560px) {
         .app {
           padding: 8px;
@@ -744,15 +764,12 @@
             <span>예비 농촌지도사 도전!</span>
           </h1>
           <p class="lead">
-            청양의 한 고추 농가에서 긴급 민원이 도착했습니다. 여러분은 오늘 하루
-            예비 농촌지도사가 되어 농업인의 고민을 듣고, 청양고추 재배 문제를
-            하나씩 해결해야 합니다.
+            청양의 한 고추 농가에서 긴급 민원이 도착했습니다. 여러분은 오늘 하루 예비 농촌지도사가 되어
+            농업인의 고민을 듣고, 청양고추 재배 문제를 하나씩 해결해야 합니다.
           </p>
           <div id="startImageArea" class="scene-image-area"></div>
           <div class="button-row">
-            <button class="primary-button" type="button" onclick="startGame()">
-              상담 시작하기
-            </button>
+            <button class="primary-button" type="button" onclick="startGame()">상담 시작하기</button>
           </div>
         </div>
       </section>
@@ -765,9 +782,8 @@
             <span>함께 해결해요</span>
           </h2>
           <p class="lead">
-            농촌지도사는 농업인을 만나 작물이 잘 자랄 수 있도록 도와주는 사람입니다.
-            고추가 시들었을 때, 잎 색이 이상할 때, 병해충이 생겼을 때,
-            농업인과 함께 원인을 찾고 해결 방법을 안내합니다.
+            농촌지도사는 농업인을 만나 작물이 잘 자랄 수 있도록 도와주는 사람입니다. 고추가 시들었을 때,
+            잎 색이 이상할 때, 병해충이 생겼을 때, 농업인과 함께 원인을 찾고 해결 방법을 안내합니다.
           </p>
           <div id="guideImageArea" class="scene-image-area"></div>
           <div class="guide-list">
@@ -777,9 +793,7 @@
             <div class="guide-item">최종 점수에 따라 나의 농촌지도사 등급이 결정됩니다.</div>
           </div>
           <div class="button-row">
-            <button class="primary-button" type="button" onclick="beginQuiz()">
-              민원 접수하기
-            </button>
+            <button class="primary-button" type="button" onclick="beginQuiz()">민원 접수하기</button>
           </div>
         </div>
       </section>
@@ -828,9 +842,7 @@
 
           <div id="options" class="options"></div>
 
-          <div class="hint-box">
-            힌트: <span id="hintText"></span>
-          </div>
+          <div class="hint-box">힌트: <span id="hintText"></span></div>
 
           <div id="feedbackPanel" class="feedback-panel">
             <div id="feedbackTitle" class="feedback-title"></div>
@@ -854,12 +866,20 @@
           <div id="gradeText" class="grade"></div>
           <p id="resultMessage" class="result-message"></p>
           <div class="button-row">
-            <button class="primary-button" type="button" onclick="resetGame()">
-              다시 도전하기
-            </button>
+            <button class="primary-button" type="button" onclick="resetGame()">다시 도전하기</button>
           </div>
         </div>
       </section>
+
+      <footer class="app-footer" aria-label="기관 정보">
+        <img
+          src="images/ChatGPT Image 2026년 5월 2일 오후 06_07_39 (2).png"
+          alt="청양군농업기술센터 로고"
+          loading="lazy"
+          onerror="this.style.display='none'"
+        />
+        <span>청양군농업기술센터</span>
+      </footer>
     </div>
 
     <script>
@@ -1135,13 +1155,7 @@
         nextButton.disabled = true;
         nextButton.textContent = item.stage === activeQuizData.length ? "결과 보기" : "다음 단계";
 
-        renderSceneImage(
-          "sceneImageArea",
-          item.image,
-          `${item.title} 상황 그림`,
-          "상황 그림 준비 중",
-          "🌶️",
-        );
+        renderSceneImage("sceneImageArea", item.image, `${item.title} 상황 그림`, "상황 그림 준비 중", "🌶️");
         renderOptions(item);
         hideFeedback();
       }
@@ -1160,14 +1174,8 @@
       }
 
       function resolveImageCandidates(imageSrc) {
-        if (!imageSrc) {
-          return [];
-        }
-
-        if (imageSrc.includes("/")) {
-          return [imageSrc];
-        }
-
+        if (!imageSrc) return [];
+        if (imageSrc.includes("/")) return [imageSrc];
         return imageBaseCandidates.map((basePath) => `${basePath}/${imageSrc}`);
       }
 
@@ -1207,27 +1215,18 @@
         shuffledEntries.forEach(([originalKey, text], index) => {
           const nextKey = letters[index];
           nextOptions[nextKey] = text;
-
-          if (originalKey === item.answer || text === correctText) {
-            nextAnswer = nextKey;
-          }
+          if (originalKey === item.answer || text === correctText) nextAnswer = nextKey;
         });
 
-        return {
-          ...item,
-          options: nextOptions,
-          answer: nextAnswer,
-        };
+        return { ...item, options: nextOptions, answer: nextAnswer };
       }
 
       function shuffleArray(items) {
         const copied = [...items];
-
         for (let index = copied.length - 1; index > 0; index -= 1) {
           const swapIndex = Math.floor(Math.random() * (index + 1));
           [copied[index], copied[swapIndex]] = [copied[swapIndex], copied[index]];
         }
-
         return copied;
       }
 
@@ -1329,11 +1328,9 @@
         if (finalScore >= 90) {
           return {
             grade: "청양고추 명예 농촌지도사",
-            message:
-              "완벽해요! 농업인의 고민을 듣고 현장 문제를 해결하는 능력이 뛰어납니다.",
+            message: "완벽해요! 농업인의 고민을 듣고 현장 문제를 해결하는 능력이 뛰어납니다.",
           };
         }
-
         if (finalScore >= 70) {
           return {
             grade: "예비 농촌지도사",
@@ -1341,19 +1338,15 @@
               "좋아요! 작물 상태를 보고 원인을 찾는 감각이 있습니다. 조금만 더 배우면 훌륭한 지도사가 될 수 있습니다.",
           };
         }
-
         if (finalScore >= 50) {
           return {
             grade: "현장 실습생",
-            message:
-              "괜찮아요! 농업 현장은 복잡하지만, 하나씩 배우면 충분히 해결할 수 있습니다.",
+            message: "괜찮아요! 농업 현장은 복잡하지만, 하나씩 배우면 충분히 해결할 수 있습니다.",
           };
         }
-
         return {
           grade: "다시 도전하는 새싹 지도사",
-          message:
-            "농업은 관찰이 중요합니다. 다시 도전해서 청양고추를 구출해보세요!",
+          message: "농업은 관찰이 중요합니다. 다시 도전해서 청양고추를 구출해보세요!",
         };
       }
 
