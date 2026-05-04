@@ -188,6 +188,45 @@
         margin-top: 28px;
       }
 
+      .player-form {
+        display: grid;
+        gap: 8px;
+        margin: 22px auto 0;
+        max-width: 420px;
+        text-align: left;
+      }
+
+      .player-form label {
+        color: #344054;
+        font-size: 15px;
+        font-weight: 900;
+      }
+
+      .player-form input {
+        width: 100%;
+        min-height: 54px;
+        border: 2px solid #c8dcff;
+        border-radius: 16px;
+        background: #ffffff;
+        padding: 0 16px;
+        color: var(--text);
+        font: inherit;
+        font-size: 18px;
+        font-weight: 800;
+      }
+
+      .player-form input:focus {
+        border-color: var(--blue);
+        outline: 4px solid rgba(31, 111, 209, 0.14);
+      }
+
+      .player-error {
+        min-height: 20px;
+        color: var(--pepper);
+        font-size: 13px;
+        font-weight: 900;
+      }
+
       .guide-list {
         display: grid;
         gap: 12px;
@@ -759,6 +798,18 @@
             하나씩 해결해야 합니다.
           </p>
           <div id="startImageArea" class="scene-image-area"></div>
+          <div class="player-form">
+            <label for="playerNameInput">이름</label>
+            <input
+              id="playerNameInput"
+              type="text"
+              inputmode="text"
+              autocomplete="name"
+              maxlength="20"
+              placeholder="이름을 입력하세요"
+            />
+            <div id="playerNameError" class="player-error" aria-live="polite"></div>
+          </div>
           <div class="button-row">
             <button class="primary-button" type="button" onclick="startGame()">
               상담 시작하기
@@ -881,10 +932,44 @@
       </footer>
     </div>
 
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+      import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBu2bNQqCbUBex5YTt6QDxEjoFqyRyr_Gc",
+        authDomain: "cheongyang-pepper-game.firebaseapp.com",
+        projectId: "cheongyang-pepper-game",
+        storageBucket: "cheongyang-pepper-game.firebasestorage.app",
+        messagingSenderId: "494514068793",
+        appId: "1:494514068793:web:dc0ac8f86e96491b7ddce8",
+        measurementId: "G-J878P6QZNH",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      window.savePepperGameLog = async (payload) => {
+        await addDoc(collection(db, "pepperGameLogs"), payload);
+      };
+
+      const queuedLogs = window.pendingPepperGameLogs || [];
+      window.pendingPepperGameLogs = [];
+
+      queuedLogs.forEach((payload) => {
+        window.savePepperGameLog(payload).catch(() => {});
+      });
+    </script>
+
     <script>
       const introAssets = {
         startImage: "images/start-main-scene.png",
         guideImage: "images/guide-advisor-role.png",
+      };
+
+      const trackingConfig = {
+        endpoint: "",
+        useFirebase: true,
       };
 
       const fallbackImages = {
@@ -1090,7 +1175,9 @@
       let selectedOption = null;
       let answered = false;
       let activeQuizData = [];
+      let playerName = "";
       const preloadedImages = new Set();
+      const sessionId = getSessionId();
 
       const screens = {
         start: document.getElementById("startScreen"),
@@ -1103,6 +1190,69 @@
         Object.values(screens).forEach((screen) => screen.classList.remove("active"));
         screens[name].classList.add("active");
         window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function getSessionId() {
+        const storageKey = "pepperGameSessionId";
+        const createId = () =>
+          window.crypto && window.crypto.randomUUID
+            ? window.crypto.randomUUID()
+            : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+
+        try {
+          const existingId = sessionStorage.getItem(storageKey);
+
+          if (existingId) return existingId;
+
+          const nextId = createId();
+          sessionStorage.setItem(storageKey, nextId);
+          return nextId;
+        } catch {
+          return createId();
+        }
+      }
+
+      function trackEvent(eventName, eventData = {}) {
+        if (!trackingConfig.endpoint && !trackingConfig.useFirebase) return;
+
+        const payload = {
+          eventName,
+          sessionId,
+          playerName,
+          page: location.href,
+          userAgent: navigator.userAgent,
+          createdAt: new Date().toISOString(),
+          ...eventData,
+        };
+
+        if (trackingConfig.useFirebase) {
+          if (window.savePepperGameLog) {
+            window.savePepperGameLog(payload).catch(() => {});
+          } else {
+            window.pendingPepperGameLogs = window.pendingPepperGameLogs || [];
+            window.pendingPepperGameLogs.push(payload);
+          }
+        }
+
+        if (!trackingConfig.endpoint) return;
+
+        const body = JSON.stringify(payload);
+
+        if (navigator.sendBeacon) {
+          const blob = new Blob([body], { type: "text/plain;charset=utf-8" });
+          navigator.sendBeacon(trackingConfig.endpoint, blob);
+          return;
+        }
+
+        fetch(trackingConfig.endpoint, {
+          method: "POST",
+          mode: "no-cors",
+          keepalive: true,
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8",
+          },
+          body,
+        }).catch(() => {});
       }
 
       function renderStartScreen() {
@@ -1130,6 +1280,19 @@
       }
 
       function startGame() {
+        const nameInput = document.getElementById("playerNameInput");
+        const errorEl = document.getElementById("playerNameError");
+        const nextName = nameInput.value.trim();
+
+        if (!nextName) {
+          errorEl.textContent = "이름을 입력한 뒤 시작하세요.";
+          nameInput.focus();
+          return;
+        }
+
+        playerName = nextName.slice(0, 20);
+        errorEl.textContent = "";
+        trackEvent("game_start");
         renderGuideScreen();
       }
 
@@ -1137,6 +1300,9 @@
         currentIndex = 0;
         score = 0;
         activeQuizData = quizData.map((item) => randomizeOptions(item));
+        trackEvent("quiz_start", {
+          totalQuestions: activeQuizData.length,
+        });
         renderQuestion();
         preloadUpcomingImages();
         showScreen("quiz");
@@ -1365,6 +1531,13 @@
         document.getElementById("finalScore").textContent = `${score}점`;
         document.getElementById("gradeText").textContent = result.grade;
         document.getElementById("resultMessage").textContent = result.message;
+        trackEvent("game_complete", {
+          playerName,
+          score,
+          grade: result.grade,
+          totalQuestions: activeQuizData.length,
+          correctCount: score / 10,
+        });
         showScreen("result");
       }
 
@@ -1406,9 +1579,17 @@
         selectedOption = null;
         answered = false;
         activeQuizData = [];
+        document.getElementById("playerNameError").textContent = "";
         renderStartScreen();
       }
 
+      document.getElementById("playerNameInput").addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          startGame();
+        }
+      });
+
+      trackEvent("page_visit");
       renderStartScreen();
     </script>
   </body>
