@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>청양고추 구출작전: 예비 농촌지도사 도전!</title>
+    <link rel="preload" as="image" href="images/intro-start.jpg" fetchpriority="high" />
     <style>
       :root {
         --pepper: #d92323;
@@ -741,47 +742,52 @@
       }
     </style>
   </head>
-
   <body>
     <div class="app">
       <section id="startScreen" class="screen active center-card">
         <div class="main-card intro-card">
-          <div class="eyebrow"><span class="pepper-emoji">🌶️</span> 중학생 직업체험 웹게임</div>
+          <div class="eyebrow"><span class="pepper-icon"></span> 중학생 직업체험 웹게임</div>
           <h1 class="title">
             청양고추 구출작전
             <span>예비 농촌지도사 도전!</span>
           </h1>
           <p class="lead">
-            청양의 한 고추 농가에서 긴급 민원이 도착했습니다. 여러분은 오늘 하루 예비 농촌지도사가 되어
-            농업인의 고민을 듣고, 청양고추 재배 문제를 하나씩 해결해야 합니다.
+            청양의 한 고추 농가에서 긴급 민원이 도착했습니다. 여러분은 오늘 하루
+            예비 농촌지도사가 되어 농업인의 고민을 듣고, 청양고추 재배 문제를
+            하나씩 해결해야 합니다.
           </p>
           <div id="startImageArea" class="scene-image-area"></div>
           <div class="button-row">
-            <button class="primary-button" type="button" onclick="startGame()">상담 시작하기</button>
+            <button class="primary-button" type="button" onclick="startGame()">
+              상담 시작하기
+            </button>
           </div>
         </div>
       </section>
 
       <section id="guideScreen" class="screen center-card">
         <div class="main-card intro-card">
-          <div class="eyebrow"><span class="pepper-emoji">🌶️</span> 농촌지도사 역할 안내</div>
+          <div class="eyebrow"><span class="pepper-icon"></span> 농촌지도사 역할 안내</div>
           <h2 class="title">
             농업인의 문제를
             <span>함께 해결해요</span>
           </h2>
           <p class="lead">
-            농촌지도사는 작물의 상태를 관찰하고, 농업인의 이야기를 듣고, 여러 가능성 중 가장 알맞은 원인을
-            찾아가는 사람입니다. 이번 미션에서는 바로 처방하기보다 먼저 무엇을 확인해야 하는지 판단해야 합니다.
+            농촌지도사는 농업인을 만나 작물이 잘 자랄 수 있도록 도와주는 사람입니다.
+            고추가 시들었을 때, 잎 색이 이상할 때, 병해충이 생겼을 때,
+            농업인과 함께 원인을 찾고 해결 방법을 안내합니다.
           </p>
           <div id="guideImageArea" class="scene-image-area"></div>
           <div class="guide-list">
             <div class="guide-item">총 10단계 상담 미션을 해결합니다.</div>
-            <div class="guide-item">각 단계마다 농업인의 말과 현장상황을 함께 보고 판단합니다.</div>
-            <div class="guide-item">정답을 고른 뒤 해설을 통해 농촌지도사의 판단 과정을 배웁니다.</div>
-            <div class="guide-item">정답을 맞히면 10점을 얻고, 최종 점수에 따라 등급이 결정됩니다.</div>
+            <div class="guide-item">각 단계마다 현장 상황을 보고 가장 알맞은 답을 고릅니다.</div>
+            <div class="guide-item">정답을 맞히면 10점을 얻습니다.</div>
+            <div class="guide-item">최종 점수에 따라 나의 농촌지도사 등급이 결정됩니다.</div>
           </div>
           <div class="button-row">
-            <button class="primary-button" type="button" onclick="beginQuiz()">민원 접수하기</button>
+            <button class="primary-button" type="button" onclick="beginQuiz()">
+              민원 접수하기
+            </button>
           </div>
         </div>
       </section>
@@ -790,7 +796,7 @@
         <div class="main-card quiz-card">
           <div class="status-panel">
             <div class="status-title">
-              <span class="pepper-emoji">🌶️</span>
+              <span class="pepper-icon"></span>
               <strong>청양고추 구출작전</strong>
             </div>
             <div class="status-grid">
@@ -846,23 +852,28 @@
 
       <section id="resultScreen" class="screen center-card">
         <div class="main-card result-card">
-          <div class="eyebrow"><span class="pepper-emoji">🌶️</span> 최종 결과</div>
+          <div class="eyebrow"><span class="pepper-icon"></span> 최종 결과</div>
           <h2 class="title">상담 완료</h2>
           <div id="finalScore" class="score-number">0점</div>
           <div id="gradeText" class="grade"></div>
           <p id="resultMessage" class="result-message"></p>
           <div class="button-row">
-            <button class="primary-button" type="button" onclick="resetGame()">다시 도전하기</button>
+            <button class="primary-button" type="button" onclick="resetGame()">
+              다시 도전하기
+            </button>
           </div>
         </div>
       </section>
 
       <footer class="app-footer" aria-label="기관 정보">
         <img
-          src="ChatGPT Image 2026년 5월 2일 오후 04_31_52.png"
+          src="images/cheongyang-agri-center-logo.png"
           alt="청양군농업기술센터 로고"
+          width="720"
+          height="240"
           loading="lazy"
-          onerror="this.style.display='none'"
+          decoding="async"
+          onerror="if (!this.dataset.fallback) { this.dataset.fallback='1'; this.src='images/ChatGPT Image 2026년 5월 2일 오후 04_31_52.png'; } else { this.style.display='none'; }"
         />
         <span>기술보급과 스마트농업팀</span>
       </footer>
@@ -870,15 +881,30 @@
 
     <script>
       const introAssets = {
-        startImage: "start-main-scene.png",
-        guideImage: "guide-advisor-role.png",
+        startImage: "images/intro-start.jpg",
+        guideImage: "images/intro-guide.jpg",
+      };
+
+      const fallbackImages = {
+        "images/intro-start.jpg": "images/start-main-scene.png",
+        "images/intro-guide.jpg": "images/guide-advisor-role.png",
+        "images/stage-01-consultation.jpg": "images/stage01-first-consultation.png",
+        "images/stage-02-field-prep.jpg": "images/stage02-field-preparation.png",
+        "images/stage-03-wilting.jpg": "images/stage03-wilting-young-pepper.png",
+        "images/stage-04-pale-leaves.jpg": "images/stage04-pale-leaves.png",
+        "images/stage-05-low-fruit.jpg": "images/stage05-flowering-low-fruit.png",
+        "images/stage-06-black-tip.jpg": "images/stage06-black-pepper-tip.png",
+        "images/stage-07-virus-leaves.jpg": "images/stage07-curled-mottled-leaves.png",
+        "images/stage-08-rain-spots.jpg": "images/stage08-rainy-spots.png",
+        "images/stage-09-heat-stress.jpg": "images/stage09-heat-stress.png",
+        "images/stage-10-harvest.jpg": "images/stage10-harvest-check.png",
       };
 
       const quizData = [
         {
           stage: 1,
           title: "첫 민원 접수",
-          image: "stage01-first-consultation.png",
+          image: "images/stage-01-consultation.jpg",
           speech: "청양고추를 처음 키워보는데, 어디서부터 시작해야 하나요?",
           situation: "청양고추 재배 시작 / 모종 준비 / 재배 일정 확인 필요",
           question: "고추 재배를 시작할 때 농촌지도사가 가장 먼저 확인해야 할 내용은 무엇일까요?",
@@ -896,7 +922,7 @@
         {
           stage: 2,
           title: "정식 전 밭 준비",
-          image: "stage02-field-preparation.png",
+          image: "images/stage-02-field-prep.jpg",
           speech: "모종은 준비됐는데 밭에 바로 심어도 될까요?",
           situation: "정식 전 단계 / 밭 준비 중 / 토양과 배수 확인 필요",
           question: "고추를 정식하기 전 밭 상태를 점검할 때 가장 알맞은 판단은 무엇일까요?",
@@ -914,7 +940,7 @@
         {
           stage: 3,
           title: "어린 고추가 시들어요",
-          image: "stage03-wilting-young-pepper.png",
+          image: "images/stage-03-wilting.jpg",
           speech: "물을 줬는데도 고추가 계속 시들어요!",
           situation: "정식 후 초기 생육 / 최근 관수량 증가 / 일부 잎 처짐 발생",
           question: "물을 줬는데도 고추가 시들 때 농촌지도사가 먼저 확인해야 할 내용은 무엇일까요?",
@@ -932,7 +958,7 @@
         {
           stage: 4,
           title: "잎 색이 연해졌어요",
-          image: "stage04-pale-leaves.png",
+          image: "images/stage-04-pale-leaves.jpg",
           speech: "잎 색이 연하고 힘이 없어 보여요.",
           situation: "잎 색 연화 / 생육 약화 / 비료 이력 확인 필요",
           question: "잎 색이 연해진 고추를 보고 가장 적절한 상담 방향은 무엇일까요?",
@@ -950,7 +976,7 @@
         {
           stage: 5,
           title: "꽃은 피는데 열매가 적어요",
-          image: "stage05-flowering-low-fruit.png",
+          image: "images/stage-05-low-fruit.jpg",
           speech: "꽃은 많은데 왜 고추가 잘 안 달릴까요?",
           situation: "개화 중 / 착과 불량 / 온도·수분·양분 상태 확인 필요",
           question: "꽃은 피지만 고추가 잘 달리지 않을 때 가장 알맞은 확인 내용은 무엇일까요?",
@@ -968,7 +994,7 @@
         {
           stage: 6,
           title: "고추 끝이 검게 변해요",
-          image: "stage06-black-pepper-tip.png",
+          image: "images/stage-06-black-tip.jpg",
           speech: "고추 끝이 검게 변했어요. 병인가요?",
           situation: "열매 끝부분 흑변 / 수분 관리 불안정 가능 / 칼슘 흡수 확인 필요",
           question: "고추 끝부분이 검게 변하는 증상을 보고 우선 확인해야 할 내용으로 가장 알맞은 것은 무엇일까요?",
@@ -986,7 +1012,7 @@
         {
           stage: 7,
           title: "잎이 오그라들고 얼룩져요",
-          image: "stage07-curled-mottled-leaves.png",
+          image: "images/stage-07-virus-leaves.jpg",
           speech: "잎이 쭈글쭈글하고 얼룩져요!",
           situation: "잎 오그라듦 / 얼룩무늬 발생 / 바이러스와 매개충 확인 필요",
           question: "잎 오그라듦과 얼룩무늬가 보여 바이러스 피해가 의심될 때 가장 적절한 지도 방향은 무엇일까요?",
@@ -1004,7 +1030,7 @@
         {
           stage: 8,
           title: "장마 뒤 고추에 반점이 생겨요",
-          image: "stage08-rainy-spots.png",
+          image: "images/stage-08-rain-spots.jpg",
           speech: "비가 온 뒤부터 고추에 반점이 생겼어요!",
           situation: "장마 후 습한 환경 / 열매 반점 발생 / 병든 열매 관리 필요",
           question: "장마 뒤 고추 열매에 반점이 생긴 상황에서 가장 적절한 현장 지도 내용은 무엇일까요?",
@@ -1022,7 +1048,7 @@
         {
           stage: 9,
           title: "너무 더워서 고추가 약해져요",
-          image: "stage09-heat-stress.png",
+          image: "images/stage-09-heat-stress.jpg",
           speech: "너무 더워서 고추가 힘이 없어 보여요!",
           situation: "고온 지속 / 강한 햇빛 / 수분·차광·통풍 관리 필요",
           question: "고온기에 고추가 약해질 때 가장 적절한 관리 방향은 무엇일까요?",
@@ -1040,7 +1066,7 @@
         {
           stage: 10,
           title: "수확 직전 마지막 점검",
-          image: "stage10-harvest-check.png",
+          image: "images/stage-10-harvest.jpg",
           speech: "이제 수확해도 될까요? 아직 덜 익은 것도 있어요.",
           situation: "수확 직전 / 착색 정도 차이 / 병든 열매 확인 필요",
           question: "수확 직전 농촌지도사가 안내할 내용으로 가장 알맞은 것은 무엇일까요?",
@@ -1062,6 +1088,7 @@
       let selectedOption = null;
       let answered = false;
       let activeQuizData = [];
+      const preloadedImages = new Set();
 
       const screens = {
         start: document.getElementById("startScreen"),
@@ -1070,8 +1097,6 @@
         result: document.getElementById("resultScreen"),
       };
 
-      const imageBaseCandidates = ["assets/images", "images", "./assets/images", "./images"];
-
       function showScreen(name) {
         Object.values(screens).forEach((screen) => screen.classList.remove("active"));
         screens[name].classList.add("active");
@@ -1079,6 +1104,7 @@
       }
 
       function renderStartScreen() {
+        preloadImage(introAssets.guideImage);
         renderSceneImage(
           "startImageArea",
           introAssets.startImage,
@@ -1090,6 +1116,7 @@
       }
 
       function renderGuideScreen() {
+        preloadImage(quizData[0].image);
         renderSceneImage(
           "guideImageArea",
           introAssets.guideImage,
@@ -1109,6 +1136,7 @@
         score = 0;
         activeQuizData = quizData.map((item) => randomizeOptions(item));
         renderQuestion();
+        preloadUpcomingImages();
         showScreen("quiz");
       }
 
@@ -1119,7 +1147,7 @@
 
         document.getElementById("stageText").textContent = `${item.stage} / ${activeQuizData.length} 단계`;
         document.getElementById("scoreText").textContent = score;
-        document.getElementById("progressFill").style.width = `${(item.stage / activeQuizData.length) * 100}%`;
+        document.getElementById("progressFill").style.width = `${item.stage * 10}%`;
         document.getElementById("stageTitle").textContent = item.title;
         document.getElementById("speechText").textContent = item.speech;
         document.getElementById("situationText").textContent = item.situation;
@@ -1130,17 +1158,59 @@
         nextButton.disabled = true;
         nextButton.textContent = item.stage === activeQuizData.length ? "결과 보기" : "다음 단계";
 
-        renderSceneImage("sceneImageArea", item.image, `${item.title} 상황 그림`, "상황 그림 준비 중", "🌶️");
+        renderSceneImage(
+          "sceneImageArea",
+          item.image,
+          `${item.title} 상황 그림`,
+          "상황 그림 준비 중",
+          "🌶️",
+        );
         renderOptions(item);
         hideFeedback();
+        preloadUpcomingImages();
       }
 
-      function createImageMarkup(src, altText) {
-        return `<img src="${src}" alt="${altText}" />`;
-      }
+      function renderSceneImage(elementId, imageSrc, altText, placeholderText, iconText) {
+        const imageArea = document.getElementById(elementId);
+        if (imageSrc) {
+          const candidates = [imageSrc, fallbackImages[imageSrc]].filter(Boolean);
+          let candidateIndex = 0;
+          const imageEl = new Image();
+          imageEl.alt = altText;
+          imageEl.width = 1200;
+          imageEl.height = 675;
+          imageEl.decoding = "async";
+          imageEl.loading = elementId === "startImageArea" ? "eager" : "lazy";
 
-      function createImagePlaceholder(placeholderText, iconText) {
-        return `
+          if (elementId === "startImageArea") {
+            imageEl.fetchPriority = "high";
+          }
+
+          imageEl.addEventListener(
+            "error",
+            () => {
+              candidateIndex += 1;
+
+              if (candidateIndex < candidates.length) {
+                imageEl.src = candidates[candidateIndex];
+                return;
+              }
+
+              imageArea.innerHTML = `
+                <div class="image-placeholder">
+                  <div class="placeholder-icon">${iconText}</div>
+                  <p>${placeholderText}</p>
+                </div>
+              `;
+            },
+          );
+
+          imageEl.src = candidates[candidateIndex];
+          imageArea.replaceChildren(imageEl);
+          return;
+        }
+
+        imageArea.innerHTML = `
           <div class="image-placeholder">
             <div class="placeholder-icon">${iconText}</div>
             <p>${placeholderText}</p>
@@ -1148,35 +1218,23 @@
         `;
       }
 
-      function resolveImageCandidates(imageSrc) {
-        if (!imageSrc) return [];
-        if (imageSrc.includes("/")) return [imageSrc];
-        return imageBaseCandidates.map((basePath) => `${basePath}/${imageSrc}`);
+      function preloadImage(imageSrc) {
+        if (!imageSrc || preloadedImages.has(imageSrc)) return;
+        preloadedImages.add(imageSrc);
+
+        const imageEl = new Image();
+        imageEl.decoding = "async";
+        imageEl.src = imageSrc;
       }
 
-      function renderSceneImage(elementId, imageSrc, altText, placeholderText, iconText) {
-        const imageArea = document.getElementById(elementId);
-        const candidates = resolveImageCandidates(imageSrc);
+      function preloadUpcomingImages() {
+        if (!activeQuizData.length) return;
 
-        if (!candidates.length) {
-          imageArea.innerHTML = createImagePlaceholder(placeholderText, iconText);
-          return;
-        }
+        const currentItem = activeQuizData[currentIndex];
+        const nextItem = activeQuizData[currentIndex + 1];
 
-        let candidateIndex = 0;
-        imageArea.innerHTML = createImageMarkup(candidates[candidateIndex], altText);
-
-        const imageEl = imageArea.querySelector("img");
-        imageEl.addEventListener("error", () => {
-          candidateIndex += 1;
-
-          if (candidateIndex < candidates.length) {
-            imageEl.src = candidates[candidateIndex];
-            return;
-          }
-
-          imageArea.innerHTML = createImagePlaceholder(placeholderText, iconText);
-        });
+        preloadImage(currentItem && currentItem.image);
+        preloadImage(nextItem && nextItem.image);
       }
 
       function randomizeOptions(item) {
@@ -1196,7 +1254,11 @@
           }
         });
 
-        return { ...item, options: nextOptions, answer: nextAnswer };
+        return {
+          ...item,
+          options: nextOptions,
+          answer: nextAnswer,
+        };
       }
 
       function shuffleArray(items) {
@@ -1238,7 +1300,6 @@
         answered = true;
 
         if (isCorrect) score += 10;
-
         document.getElementById("scoreText").textContent = score;
         document.getElementById("selectStatus").textContent = isCorrect
           ? "정답을 선택했습니다"
@@ -1310,38 +1371,30 @@
           return {
             grade: "청양고추 명예 농촌지도사",
             message:
-              "대단해요! 농업인의 말을 듣고 작물 상태와 환경을 함께 판단하는 능력이 뛰어납니다.",
+              "완벽해요! 농업인의 고민을 듣고 현장 문제를 해결하는 능력이 뛰어납니다.",
           };
         }
 
-        if (finalScore >= 80) {
+        if (finalScore >= 70) {
           return {
-            grade: "우수 예비 농촌지도사",
+            grade: "예비 농촌지도사",
             message:
-              "좋아요! 대부분의 현장 상황에서 먼저 확인해야 할 내용을 잘 판단했습니다.",
+              "좋아요! 작물 상태를 보고 원인을 찾는 감각이 있습니다. 조금만 더 배우면 훌륭한 지도사가 될 수 있습니다.",
           };
         }
 
-        if (finalScore >= 60) {
-          return {
-            grade: "현장 판단형 예비 농촌지도사",
-            message:
-              "충분히 잘했습니다. 농업 현장은 한 가지 원인으로 단정하기 어렵다는 점을 이해하기 시작했습니다.",
-          };
-        }
-
-        if (finalScore >= 40) {
+        if (finalScore >= 50) {
           return {
             grade: "현장 실습생",
             message:
-              "괜찮아요! 농업 현장은 복잡하지만, 작물·환경·관리 이력을 함께 보는 연습을 하면 더 좋아질 수 있습니다.",
+              "괜찮아요! 농업 현장은 복잡하지만, 하나씩 배우면 충분히 해결할 수 있습니다.",
           };
         }
 
         return {
           grade: "다시 도전하는 새싹 지도사",
           message:
-            "농업은 관찰이 중요합니다. 다시 도전하면서 농촌지도사가 어떤 순서로 문제를 확인하는지 익혀보세요.",
+            "농업은 관찰이 중요합니다. 다시 도전해서 청양고추를 구출해보세요!",
         };
       }
 
